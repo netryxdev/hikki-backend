@@ -1,15 +1,18 @@
-import { MongoClient } from 'mongodb';
+import mongoose, { Document, Model, Schema, ConnectOptions } from 'mongoose';
 
-const uri = 'mongodb://localhost:27017/mydatabase';
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+const uri = 'mongodb+srv://<username>:<password>@<cluster>.mongodb.net/<database>?retryWrites=true&w=majority';
 
-async function connectToDatabase(): Promise<MongoClient> {
+async function connectToDatabase() {
   try {
-    await client.connect();
+    await mongoose.connect(uri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    } as ConnectOptions);
     console.log('Conexão com o MongoDB estabelecida');
   } catch (err) {
     console.error('Erro ao conectar ao MongoDB', err);
   }
 }
 
-export { connectToDatabase, client };
+export { connectToDatabase };
+
